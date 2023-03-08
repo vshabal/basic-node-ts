@@ -1,10 +1,13 @@
+import 'reflect-metadata';
 import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../common/base.controller';
 import { HTTPError } from '../errors/http-error';
 import { Ilogger } from '../logger/logger.interface';
+import { inject } from 'inversify';
+import { TYPES } from '../types';
 
 export class UserController extends BaseController {
-    constructor(logger: Ilogger) {
+    constructor(@inject(TYPES.ILogger) logger: Ilogger) {
         super(logger);
         this.bindRoutes([
             {
