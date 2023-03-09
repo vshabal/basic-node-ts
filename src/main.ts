@@ -10,19 +10,19 @@ import { TYPES } from './types';
 import { UserController } from './users/users.controller';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-    bind<Ilogger>(TYPES.ILogger).to(LoggerService);
-    bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
-    bind<UserController>(TYPES.UserController).to(UserController);
-    bind<App>(TYPES.Application).to(App);
+  bind<Ilogger>(TYPES.ILogger).to(LoggerService);
+  bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
+  bind<UserController>(TYPES.UserController).to(UserController);
+  bind<App>(TYPES.Application).to(App);
 });
 
 function bootstrap() {
-    const appContainer = new Container();
-    appContainer.load(appBindings);
-    const app = appContainer.get<App>(TYPES.Application);
-    app.init();
+  const appContainer = new Container();
+  appContainer.load(appBindings);
+  const app = appContainer.get<App>(TYPES.Application);
+  app.init();
 
-    return { app, appContainer };
+  return { app, appContainer };
 }
 
 export const { app, appContainer } = bootstrap();

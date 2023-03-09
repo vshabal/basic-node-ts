@@ -8,31 +8,31 @@ import { UserController } from './users/users.controller';
 
 @injectable()
 export class App {
-    private app: Express;
+  private app: Express;
 
-    private port: number;
+  private port: number;
 
-    constructor(
-        @inject(TYPES.ILogger) private logger: Ilogger,
-        @inject(TYPES.UserController) private userController: UserController,
-        @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter
-    ) {
-        this.app = express();
-        this.port = 8000;
-    }
+  constructor(
+    @inject(TYPES.ILogger) private logger: Ilogger,
+    @inject(TYPES.UserController) private userController: UserController,
+    @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+  ) {
+    this.app = express();
+    this.port = 8000;
+  }
 
-    private useRoutes() {
-        this.app.use('/users', this.userController.router)
-    }
+  private useRoutes() {
+    this.app.use('/users', this.userController.router);
+  }
 
-    private useExceptionFilters() {
-        this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
-    }
+  private useExceptionFilters() {
+    this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+  }
 
-    public async init() {
-        this.useRoutes();
-        this.useExceptionFilters();
-        this.app.listen(this.port);
-        this.logger.log(`The server is running on http://localhost:${this.port}`);
-    }
+  public async init() {
+    this.useRoutes();
+    this.useExceptionFilters();
+    this.app.listen(this.port);
+    this.logger.log(`The server is running on http://localhost:${this.port}`);
+  }
 }

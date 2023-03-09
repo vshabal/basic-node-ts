@@ -5,21 +5,21 @@ import { Ilogger } from './logger.interface';
 
 @injectable()
 export class LoggerService implements Ilogger {
-    private logger: Logger<{}>;
+  private logger: Logger<{}>;
 
-    constructor() {
-        this.logger = new Logger();
-    }
+  constructor() {
+    this.logger = new Logger();
+  }
 
-    log(...args: unknown[]) {
-        this.logger.info(...args)
-    }
+  log(...args: unknown[]) {
+    this.logger.info(...args);
+  }
 
-    warn(...args: unknown[]) {
-        this.logger.warn(...args)
-    }
+  warn(...args: unknown[]) {
+    this.logger.warn(...args);
+  }
 
-    error(...args: unknown[]) {
-        this.logger.error(...args)
-    }
+  error(...args: unknown[]) {
+    this.logger.error(...args);
+  }
 }

@@ -7,28 +7,28 @@ import { inject } from 'inversify';
 import { TYPES } from '../types';
 
 export class UserController extends BaseController {
-    constructor(@inject(TYPES.ILogger) logger: Ilogger) {
-        super(logger);
-        this.bindRoutes([
-            {
-                path: '/register',
-                method: 'post',
-                func: this.register,
-            },
-            {
-                path: '/login',
-                method: 'post',
-                func: this.login,
-            }
-        ])
-    }
+  constructor(@inject(TYPES.ILogger) logger: Ilogger) {
+    super(logger);
+    this.bindRoutes([
+      {
+        path: '/register',
+        method: 'post',
+        func: this.register,
+      },
+      {
+        path: '/login',
+        method: 'post',
+        func: this.login,
+      },
+    ]);
+  }
 
-    private login(req: Request, res: Response, next: NextFunction) {
-        next(new HTTPError(401, "Auth error", 'login'));
-        // this.ok(res, 'Logged in');
-    }
+  private login(req: Request, res: Response, next: NextFunction) {
+    next(new HTTPError(401, 'Auth error', 'login'));
+    // this.ok(res, 'Logged in');
+  }
 
-    private register(req: Request, res: Response, next: NextFunction) {
-        this.ok(res, 'Registered');
-    }
+  private register(req: Request, res: Response, next: NextFunction) {
+    this.ok(res, 'Registered');
+  }
 }
