@@ -32,7 +32,11 @@ export abstract class BaseController {
     routes.forEach((route) => {
       this.logger.log(`Router for ${route.method} ${route.path} was registered`);
       const handler = route.func.bind(this);
-      this.router[route.method](route.path, handler);
+      const middlewares = route.middlewares?.map((middleware) =>
+        middleware.execute.bind(middleware),
+      );
+      const pipeline = middlewares ? [...middlewares, handler] : [handler];
+      this.router[route.method](route.path, pipeline);
     });
   }
 }
