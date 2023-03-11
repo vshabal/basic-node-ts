@@ -5,6 +5,7 @@ import { ExceptionFilter } from './errors/exception.filter';
 import { Ilogger } from './logger/logger.interface';
 import { TYPES } from './types';
 import { UserController } from './users/users.controller';
+import bodyParser from 'body-parser';
 
 @injectable()
 export class App {
@@ -21,6 +22,10 @@ export class App {
     this.port = 8000;
   }
 
+  private useMiddlwares() {
+    this.app.use(bodyParser.json());
+  }
+
   private useRoutes() {
     this.app.use('/users', this.userController.router);
   }
@@ -30,6 +35,7 @@ export class App {
   }
 
   public async init() {
+    this.useMiddlwares();
     this.useRoutes();
     this.useExceptionFilters();
     this.app.listen(this.port);

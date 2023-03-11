@@ -7,13 +7,16 @@ import { IExceptionFilter } from './errors/exception.filter.interface';
 import { Ilogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
+import { IUserService } from './users/user.service.interface';
 import { UserController } from './users/users.controller';
+import { UserService } from './users/users.service';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<Ilogger>(TYPES.ILogger).to(LoggerService);
   bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
   bind<UserController>(TYPES.UserController).to(UserController);
   bind<App>(TYPES.Application).to(App);
+  bind<IUserService>(TYPES.IUserService).to(UserService);
 });
 
 function bootstrap() {
