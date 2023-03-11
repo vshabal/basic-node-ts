@@ -8,6 +8,7 @@ import { TYPES } from '../types';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { UserService } from './users.service';
+import { ValidateMiddleware } from '../common/validate.middleware';
 
 export class UserController extends BaseController {
   constructor(
@@ -20,11 +21,13 @@ export class UserController extends BaseController {
         path: '/register',
         method: 'post',
         func: this.register,
+        middlewares: [new ValidateMiddleware(UserRegisterDto)],
       },
       {
         path: '/login',
         method: 'post',
         func: this.login,
+        middlewares: [new ValidateMiddleware(UserLoginDto)],
       },
     ]);
   }
