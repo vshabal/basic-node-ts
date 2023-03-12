@@ -6,7 +6,6 @@ import { Ilogger } from './logger/logger.interface';
 import { TYPES } from './types';
 import { UserController } from './users/users.controller';
 import bodyParser from 'body-parser';
-import { IConfigService } from './config/config.service.interface';
 
 @injectable()
 export class App {
@@ -18,11 +17,9 @@ export class App {
     @inject(TYPES.ILogger) private logger: Ilogger,
     @inject(TYPES.UserController) private userController: UserController,
     @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
-    @inject(TYPES.IConfigService) private configService: IConfigService,
   ) {
     this.app = express();
     this.port = 8000;
-    console.log(configService.get('KEY'), typeof configService.get('KEY'));
   }
 
   private useMiddlwares() {
