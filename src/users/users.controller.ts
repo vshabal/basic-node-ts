@@ -9,11 +9,13 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { UserService } from './users.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
+import { IConfigService } from '../config/config.service.interface';
 
 export class UserController extends BaseController {
   constructor(
     @inject(TYPES.ILogger) logger: Ilogger,
     @inject(TYPES.IUserService) private userService: UserService,
+    @inject(TYPES.IConfigService) private configService: IConfigService,
   ) {
     super(logger);
     this.bindRoutes([
@@ -30,6 +32,7 @@ export class UserController extends BaseController {
         middlewares: [new ValidateMiddleware(UserLoginDto)],
       },
     ]);
+    console.log(configService.get('KEY'));
   }
 
   private login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
