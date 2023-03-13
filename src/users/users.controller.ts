@@ -32,9 +32,11 @@ export class UserController extends BaseController {
     ]);
   }
 
-  private login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
+  private async login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
+    if (await this.userService.validateUser(req.body)) {
+      return this.ok(res, 'ok');
+    }
     next(new HTTPError(401, 'Auth error', 'login'));
-    // this.ok(res, 'Logged in');
   }
 
   private async register(
@@ -47,6 +49,6 @@ export class UserController extends BaseController {
       return next(new HTTPError(422, 'user already exists'));
     }
 
-    this.ok(res, result);
+    this.ok(res, { email: result.email, id: result.id });
   }
 }

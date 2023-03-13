@@ -12,6 +12,7 @@ import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
 import { IUserService } from './users/user.service.interface';
 import { UserController } from './users/users.controller';
+import { UsersRepository } from './users/users.repository';
 import { UserService } from './users/users.service';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
@@ -22,6 +23,7 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<IUserService>(TYPES.IUserService).to(UserService);
   bind<IConfigService>(TYPES.IConfigService).to(ConfigService).inSingletonScope();
   bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
+  bind<UsersRepository>(TYPES.IUsersRepository).to(UsersRepository).inSingletonScope();
 });
 
 function bootstrap() {
