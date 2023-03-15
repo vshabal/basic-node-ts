@@ -11,6 +11,7 @@ import { UserService } from './users.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
 import { sign } from 'jsonwebtoken';
 import { IConfigService } from '../config/config.service.interface';
+import { AuthGuard } from '../common/auth.guard';
 
 export class UserController extends BaseController {
   constructor(
@@ -36,7 +37,7 @@ export class UserController extends BaseController {
         path: '/info',
         method: 'get',
         func: this.info,
-        middlewares: [],
+        middlewares: [new AuthGuard()],
       },
     ]);
   }
