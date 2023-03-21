@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express, { Express } from 'express';
+import { Server } from 'http';
 import { inject, injectable } from 'inversify';
 import { ExceptionFilter } from './errors/exception.filter';
 import { Ilogger } from './logger/logger.interface';
@@ -12,9 +13,11 @@ import { IConfigService } from './config/config.service.interface';
 
 @injectable()
 export class App {
-  private app: Express;
+  public app: Express;
 
   private port: number;
+
+  private server?: Server;
 
   constructor(
     @inject(TYPES.ILogger) private logger: Ilogger,
@@ -46,7 +49,11 @@ export class App {
     this.useRoutes();
     this.useExceptionFilters();
     await this.prismaService.connect();
-    this.app.listen(this.port);
+    this.server = this.app.listen(this.port);
     this.logger.log(`The server is running on http://localhost:${this.port}`);
+  }
+
+  public close() {
+    this.server?.close();
   }
 }
